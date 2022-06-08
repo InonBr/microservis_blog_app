@@ -24,7 +24,7 @@ router.post(
     const id = uuidv4();
     const newPost = { id, title };
 
-    posts.id = newPost;
+    posts[id] = newPost;
 
     res.status(201).send({ ...newPost, msg: "post created" });
   }
