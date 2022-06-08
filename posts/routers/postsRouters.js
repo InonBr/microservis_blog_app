@@ -21,6 +21,7 @@ router.post(
     }
 
     const { title } = req.body;
+
     const id = uuidv4();
     const newPost = { id, title };
 
