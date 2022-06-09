@@ -2,6 +2,7 @@ const express = require("express");
 const router = new express.Router();
 const { v4: uuidv4 } = require("uuid");
 const { check, validationResult } = require("express-validator");
+const axios = require("axios");
 
 // we will not use a database for this project
 const posts = {};
@@ -13,7 +14,7 @@ router.get("/", (req, res) => {
 router.post(
   "/",
   [check("title", "title is required").trim().not().isEmpty()],
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -26,6 +27,11 @@ router.post(
     const newPost = { id, title };
 
     posts[id] = newPost;
+
+    await axios.post("http://localhost:5005/api/events", {
+      type: "PostCreated",
+      data: { newPost },
+    });
 
     res.status(201).send({ ...newPost, msg: "post created" });
   }
