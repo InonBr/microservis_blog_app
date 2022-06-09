@@ -23,8 +23,6 @@ router.post("/events", (req, res) => {
     post.comments.push({ id, comment });
   }
 
-  console.log(posts);
-
   res.send({});
 });
 
