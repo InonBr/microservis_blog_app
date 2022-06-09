@@ -6,24 +6,27 @@ const router = new express.Router();
 
 // we will not use a database for this project
 
-router.post(
-  "/events",
+router.post("/events", (req, res) => {
+  const event = req.body;
 
-  (req, res) => {
-    const event = req.body;
+  axios.post("http://localhost:5000/api/posts/events", event).catch((err) => {
+    console.error({ msg: err.message, errorCode: err.code });
+    throw new Error(err.message);
+  });
 
-    axios.post("http://localhost:5000/api/events", event).catch((err) => {
+  axios
+    .post("http://localhost:5001/api/comments/events", event)
+    .catch((err) => {
       console.error({ msg: err.message, errorCode: err.code });
+      throw new Error(err.message);
     });
 
-    axios.post("http://localhost:5001/api/events", event).catch((err) => {
-      console.error({ msg: err.message, errorCode: err.code });
-    });
+  axios.post("http://localhost:5002/api/query/events", event).catch((err) => {
+    console.error({ msg: err.message, errorCode: err.code });
+    throw new Error(err.message);
+  });
 
-    // axios.post("http://localhost:5002/api/events", event);
-
-    res.send({ status: "OK" });
-  }
-);
+  res.send({ status: "OK" });
+});
 
 module.exports = router;

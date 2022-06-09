@@ -30,11 +30,26 @@ router.post(
 
     await axios.post("http://localhost:5005/api/events", {
       type: "PostCreated",
-      data: { newPost },
+      data: newPost,
     });
 
-    res.status(201).send({ ...newPost, msg: "post created" });
+    res.status(201).send(newPost);
   }
 );
+
+router.post("/events", (req, res) => {
+  const event = req.body;
+
+  console.log(event);
+
+  res.send(event);
+  // if (event.type === "PostCreated") {
+  //   const { data: { newPost } } = event;
+
+  //   posts[newPost.id] = newPost;
+  // }
+
+  // res.send({ status: "OK" });
+});
 
 module.exports = router;
