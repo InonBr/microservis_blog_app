@@ -43,12 +43,23 @@ router.post(
   }
 );
 
-router.post("/comments/events", (req, res) => {
-  const event = req.body;
+router.post("/comments/events", async (req, res) => {
+  const { type, data } = req.body;
 
-  console.log(event);
+  if (type === "CommentModerated") {
+    const { postId, id, status } = data;
 
-  res.send(event);
+    const comments = commentsByPostId[postId];
+    const comment = comments.find((c) => c.id === id);
+    comment.status = status;
+
+    await axios.post("http://localhost:5005/api/events", {
+      type: "CommentUpdated",
+      data: { ...comment, postId },
+    });
+  }
+
+  res.send({});
 });
 
 module.exports = router;

@@ -40,8 +40,6 @@ router.post(
 router.post("/events", (req, res) => {
   const event = req.body;
 
-  console.log(event);
-
   res.send(event);
 });
 

@@ -23,6 +23,16 @@ router.post("/events", (req, res) => {
     post.comments.push({ id, comment, status });
   }
 
+  if (type == "CommentUpdated") {
+    const { id, comment, postId, status } = data;
+
+    const post = posts[postId];
+    const updatedComment = post.comments.find((c) => c.id === id);
+
+    updatedComment.status = status;
+    updatedComment.comment = comment;
+  }
+
   res.send({});
 });
 
