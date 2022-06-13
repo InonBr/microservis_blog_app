@@ -43,13 +43,6 @@ router.post("/events", (req, res) => {
   console.log(event);
 
   res.send(event);
-  // if (event.type === "PostCreated") {
-  //   const { data: { newPost } } = event;
-
-  //   posts[newPost.id] = newPost;
-  // }
-
-  // res.send({ status: "OK" });
 });
 
 module.exports = router;

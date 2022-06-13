@@ -30,13 +30,13 @@ router.post(
 
     const existingComments = commentsByPostId[postId] || [];
 
-    existingComments.push({ id: commentId, comment });
+    existingComments.push({ id: commentId, comment, status: "pending" });
 
     commentsByPostId[postId] = existingComments;
 
     await axios.post("http://localhost:5005/api/events", {
       type: "CommentCreated",
-      data: { id: commentId, comment, postId },
+      data: { id: commentId, comment, postId, status: "pending" },
     });
 
     res.status(201).send(existingComments);
