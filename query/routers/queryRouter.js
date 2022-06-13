@@ -3,13 +3,7 @@ const router = new express.Router();
 
 const posts = {};
 
-router.get("/posts", (req, res) => {
-  res.send(posts);
-});
-
-router.post("/events", (req, res) => {
-  const { type, data } = req.body;
-
+const handleEvent = (type, data) => {
   if (type === "PostCreated") {
     const { id, title } = data;
 
@@ -32,8 +26,18 @@ router.post("/events", (req, res) => {
     updatedComment.status = status;
     updatedComment.comment = comment;
   }
+};
+
+router.get("/posts", (req, res) => {
+  res.send(posts);
+});
+
+router.post("/events", (req, res) => {
+  const { type, data } = req.body;
+
+  handleEvent(type, data);
 
   res.send({});
 });
 
-module.exports = router;
+module.exports = { router, handleEvent };

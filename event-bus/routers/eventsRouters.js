@@ -1,13 +1,14 @@
 const { default: axios } = require("axios");
 const express = require("express");
 const router = new express.Router();
-// const { v4: uuidv4 } = require("uuid");
-// const { check, validationResult } = require("express-validator");
 
 // we will not use a database for this project
+const events = [];
 
 router.post("/events", (req, res) => {
   const event = req.body;
+
+  events.push(event);
 
   axios.post("http://localhost:5000/api/posts/events", event).catch((err) => {
     console.error({ msg: err.message, errorCode: err.code });
@@ -30,6 +31,10 @@ router.post("/events", (req, res) => {
     });
 
   res.send({ status: "OK" });
+});
+
+router.get("/allEvents", (req, res) => {
+  res.send(events);
 });
 
 module.exports = router;
