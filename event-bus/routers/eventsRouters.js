@@ -11,20 +11,23 @@ router.post("/events", (req, res) => {
 
   axios.post("http://localhost:5000/api/posts/events", event).catch((err) => {
     console.error({ msg: err.message, errorCode: err.code });
-    throw new Error(err.message);
   });
 
   axios
     .post("http://localhost:5001/api/comments/events", event)
     .catch((err) => {
       console.error({ msg: err.message, errorCode: err.code });
-      throw new Error(err.message);
     });
 
   axios.post("http://localhost:5002/api/query/events", event).catch((err) => {
     console.error({ msg: err.message, errorCode: err.code });
-    throw new Error(err.message);
   });
+
+  axios
+    .post("http://localhost:5003/api/moderation/events", event)
+    .catch((err) => {
+      console.error({ msg: err.message, errorCode: err.code });
+    });
 
   res.send({ status: "OK" });
 });
