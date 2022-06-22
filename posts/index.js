@@ -11,5 +11,6 @@ app.use(express.json());
 app.use("/api/posts", postsRouter);
 
 app.listen(port, () => {
+  console.log("vLatest");
   console.log(`🟢 app listening on port http://localhost:${port}`);
 });
