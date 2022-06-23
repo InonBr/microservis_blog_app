@@ -16,21 +16,21 @@ router.post("/events", (req, res) => {
       console.error({ msg: err.message, errorCode: err.code });
     });
 
-  // axios
-  //   .post("http://localhost:5001/api/comments/events", event)
-  //   .catch((err) => {
-  //     console.error({ msg: err.message, errorCode: err.code });
-  //   });
+  axios
+    .post("http://comments-srv:5001/api/comments/events", event)
+    .catch((err) => {
+      console.error({ msg: err.message, errorCode: err.code });
+    });
 
-  // axios.post("http://localhost:5002/api/query/events", event).catch((err) => {
-  //   console.error({ msg: err.message, errorCode: err.code });
-  // });
+  axios.post("http://query-srv:5002/api/query/events", event).catch((err) => {
+    console.error({ msg: err.message, errorCode: err.code });
+  });
 
-  // axios
-  //   .post("http://localhost:5003/api/moderation/events", event)
-  //   .catch((err) => {
-  //     console.error({ msg: err.message, errorCode: err.code });
-  //   });
+  axios
+    .post("http://moderation-srv:5003/api/moderation/events", event)
+    .catch((err) => {
+      console.error({ msg: err.message, errorCode: err.code });
+    });
 
   res.send({ status: "OK" });
 });

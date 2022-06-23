@@ -34,10 +34,14 @@ router.post(
 
     commentsByPostId[postId] = existingComments;
 
-    await axios.post("http://localhost:5005/api/events", {
-      type: "CommentCreated",
-      data: { id: commentId, comment, postId, status: "pending" },
-    });
+    await axios
+      .post("http://event-bus-srv:5005/api/events", {
+        type: "CommentCreated",
+        data: { id: commentId, comment, postId, status: "pending" },
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     res.status(201).send(existingComments);
   }
@@ -53,10 +57,14 @@ router.post("/comments/events", async (req, res) => {
     const comment = comments.find((c) => c.id === id);
     comment.status = status;
 
-    await axios.post("http://localhost:5005/api/events", {
-      type: "CommentUpdated",
-      data: { ...comment, postId },
-    });
+    await axios
+      .post("http://event-bus-srv:5005/api/events", {
+        type: "CommentUpdated",
+        data: { ...comment, postId },
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   res.send({});

@@ -52,10 +52,12 @@ app.listen(port, async () => {
 
   try {
     const response = await axios
-      .get("http://localhost:5005/api/allEvents")
+      .get("http://event-bus-srv:5005/api/allEvents")
       .catch((err) => {
         console.error({ msg: err.message, errorCode: err.code });
       });
+
+    console.log(response);
 
     for (const event of response.data) {
       console.log("Processing event:", event.type);

@@ -8,10 +8,14 @@ router.post("/moderation/events", async (req, res) => {
   if (type === "CommentCreated") {
     const status = data.comment.includes("orange") ? "rejected" : "approved";
 
-    await axios.post("http://localhost:5005/api/events", {
-      type: "CommentModerated",
-      data: { ...data, status },
-    });
+    await axios
+      .post("http://event-bus-srv:5005/api/events", {
+        type: "CommentModerated",
+        data: { ...data, status },
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   res.send({});
