@@ -28,10 +28,14 @@ router.post(
 
     posts[id] = newPost;
 
-    await axios.post("http://localhost:5005/api/events", {
-      type: "PostCreated",
-      data: newPost,
-    });
+    await axios
+      .post("http://event-bus-srv:5005/api/events", {
+        type: "PostCreated",
+        data: newPost,
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     res.status(201).send(newPost);
   }
